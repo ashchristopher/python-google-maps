@@ -15,6 +15,10 @@ class GeoNames():
         """
         self.server = server
         # protect against infinite redirect loop.
+        self._connect()
+                
+    def _connect(self):
+        # protect against infinite redirect loop.
         redirects = []
         server_found = False
         
@@ -35,6 +39,7 @@ class GeoNames():
                     raise GeoNameInitException("Infinte re-direct loop detected.")
                 self.c = httplib.HTTPConnection(self.server)
                 sys.stderr.writelines("R301: Using new server '%s'" %(self.server))
+    
                 
 class GeoNameInitException(Exception):
     """
